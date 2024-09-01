@@ -30,9 +30,9 @@
                 <div class="row">
                     <div class="col-12 col-lg-8" style="color: white">
                         <div class="hero__content--inner">
-                            <h6 class="title__hero title__hero--tiny text-uppercase">100% Healthy & Affordable</h6>
-                            <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">Organic <br>   fresh fruits</h1>
-                            <h4 class="title__hero title__hero--small font--regular">Small Changes Big Difference</h4>
+                            <h6 class="title__hero title__hero--tiny text-uppercase">Welcome To Wonderfull</h6>
+                            <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">Welcome To Wonderfull</h1>
+                            <h4 class="title__hero title__hero--small font--regular">Welcome To Wonderfull</h4>
                             <a href="product-single-default.html" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">Show more</a>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                                             
                                         </div>
                                         <p class="blog-feed__excerpt">{{ $desa->deskripsi }}</p>
-                                        <a href="blog-single-sidebar-left.html" class="btn btn--small btn--radius btn--green btn--green-hover-black font--regular text-uppercase text-capitalize">Continue Reading</a>
+                                        <a href="/desa-wisata/{{ $desa->slug }}" class="btn btn--small btn--radius btn--green btn--green-hover-black font--regular text-uppercase text-capitalize">Continue Detail</a>
                                     </div> <!-- End  Blog Feed Content -->
                                 </div>
                                     

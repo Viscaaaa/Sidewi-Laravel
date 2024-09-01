@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DesaWisataController::class, 'showLanding']);
 
 Route::get('/desa-wisata', [DesaWisataController::class, 'getDesa'])->name('desa-wisata.getDesa');
-Route::get('/desa-wisata/{slug}', [DesaWisataController::class, 'showDesa'])->name('desa-wisata.show');
+Route::get('/desa-wisata/{slug}', [DesaWisataController::class, 'showDesa'])->name('desa-wisata.showDesa');

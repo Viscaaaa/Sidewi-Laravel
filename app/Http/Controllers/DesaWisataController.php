@@ -19,12 +19,23 @@ class DesaWisataController extends Controller
         return view('pages.landing', compact('desaWisata'));
     }
 
-
-
-
     // public function showDesa($slug)
     // {
     //     $desaWisata = DesaWisata::where('slug', $slug)->with('destinasi')->firstOrFail();
     //     return view('pages.detail', compact('desaWisata'));
     // }
+    // public function showDesa($slug)
+    // {
+    //     $desaWisata = DesaWisata::where('slug', $slug)->firstOrFail();
+    //     return view('pages.detail', compact('desaWisata'));
+    // }
+
+
+    public function showDesa($slug)
+    {
+        $desaWisata = DesaWisata::where('slug', $slug)
+            ->with('destinasi') // Memuat relasi destinasi
+            ->firstOrFail();
+        return view('pages.detaildesa', compact('desaWisata'));
+    }
 }

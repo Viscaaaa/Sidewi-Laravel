@@ -13,7 +13,7 @@ class DesaWisata extends Model
 
     public function destinasi()
     {
-        return $this->hasMany(DestinasiWisata::class);
+        return $this->hasMany(DestinasiWisata::class, 'tb_desa_wisatas_id');
     }
 
     public function adminDesa()

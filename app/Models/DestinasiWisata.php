@@ -13,7 +13,7 @@ class DestinasiWisata extends Model
 
     public function desaWisata()
     {
-        return $this->belongsTo(DesaWisata::class);
+        return $this->belongsTo(DesaWisata::class, 'tb_desa_wisatas_id');
     }
 
     public function assetDesa()

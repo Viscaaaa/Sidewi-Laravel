@@ -1,0 +1,1 @@
+{{ $desaWisata->destinasi }}
