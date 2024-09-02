@@ -13,6 +13,7 @@ class DesaWisataController extends Controller
         return view('pages.desa', compact('desaWisata'));
     }
 
+
     public function showLanding()
     {
         $desaWisata = DesaWisata::all();

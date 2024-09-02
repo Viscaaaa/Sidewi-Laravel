@@ -15,7 +15,7 @@
                             <h6 class="title__hero title__hero--tiny text-uppercase">Welcome To Wonderfull</h6>
                             <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">Welcome To Wonderfull</h1>
                             <h4 class="title__hero title__hero--small font--regular">Welcome To Wonderfull</h4>
-                            <a href="product-single-default.html" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">show more</a>
+                            <a href="/desa-wisata" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">show more</a>
                         </div>
                     </div>
                 </div>

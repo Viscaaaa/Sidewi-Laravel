@@ -19,3 +19,9 @@ Route::get('/', [DesaWisataController::class, 'showLanding']);
 
 Route::get('/desa-wisata', [DesaWisataController::class, 'getDesa'])->name('desa-wisata.getDesa');
 Route::get('/desa-wisata/{slug}', [DesaWisataController::class, 'showDesa'])->name('desa-wisata.showDesa');
+Route::get('/admin-desa/{id}', [DestinasiWisataController::class, 'showListDestinasi'])->name('admin-desa.showListDestinasi');
+Route::resource('destination', DestinasiWisataController::class);
+
+Route::prefix('desa-wisata/{desaWisata}')->group(function () {
+    Route::resource('destination', DestinasiWisataController::class);
+});

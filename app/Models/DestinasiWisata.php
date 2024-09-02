@@ -11,6 +11,14 @@ class DestinasiWisata extends Model
 
     protected $table = 'tb_destinasi_wisatas';
 
+    protected $fillable = [
+        'tb_desa_wisatas_id',
+        'nama',
+        'deskripsi',
+        'gambar',
+        'slug',
+    ];
+
     public function desaWisata()
     {
         return $this->belongsTo(DesaWisata::class, 'tb_desa_wisatas_id');
