@@ -22,13 +22,13 @@ class DestinasiController extends Controller
 
         $destinasi = $this->apiService->get('destinasi');
 
-        return view('admin.destinasi.index', ['destinasi' => $destinasi]);
+        return view('destinasi.dashboard', ['destinasi' => $destinasi]);
     }
 
 
     public function create()
     {
-        return view('admin.destinasi.create');
+        return view('destinasi.create');
     }
 
 

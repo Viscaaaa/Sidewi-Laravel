@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\ProfileUserController;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\DestinasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,12 @@ Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function
     Route::put('update/{id}', [AdminController::class, 'update'])->name('admin.update');
     Route::delete('destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
+
+
+Route::prefix('destinasi')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/', [DestinasiController::class, 'index'])->name('destinasi.dashboard');
+});
+
 
 
 

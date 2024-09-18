@@ -49,9 +49,9 @@
                     </div>
                     @elseif(Auth::user()->role === 'admin')
                     <div style="margin-top: 1rem;">
-                        <a href="{{ route('destiansi.dashboard') }}" style="background-color: #DC2626; color: white; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.375rem; text-decoration: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease-in-out;" 
+                        <a href="{{ route('destinasi.dashboard') }}" style="background-color: #DC2626; color: white; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.375rem; text-decoration: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); transition: background-color 0.3s ease-in-out;" 
                         onmouseover="this.style.backgroundColor='#B91C1C'" 
-                        onmouseout="this.style.backgroundColor='#DC2626'">Kelola Admin</a>
+                        onmouseout="this.style.backgroundColor='#DC2626'">Kelola Destinasi</a>
                     </div>
                     @endif
                 </div>
