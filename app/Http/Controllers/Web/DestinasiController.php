@@ -13,12 +13,14 @@ class DestinasiController extends Controller
     public function __construct(ApiService $apiService)
     {
         $this->apiService = $apiService;
-        $this->apiService->setToken(auth()->user()->token);
     }
 
 
     public function index()
     {
+
+        $token = session('api_token');
+        $this->apiService->setToken($token);
 
         $destinasi = $this->apiService->get('destinasi');
 
