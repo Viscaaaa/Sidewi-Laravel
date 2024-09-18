@@ -18,6 +18,6 @@ class DesaWisata extends Model
 
     public function adminDesa()
     {
-        return $this->hasOne(tb_admindesa::class);
+        return $this->hasOne(tb_admindesa::class, 'tb_desa_wisatas_id');
     }
 }

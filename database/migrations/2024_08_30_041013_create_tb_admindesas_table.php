@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_admindesa', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('tb_desa_wisatas_id')->constrained('tb_desa_wisatas')->onDelete('cascade');
             $table->foreignId('tb_akun_id')->constrained('tb_akun')->onDelete('cascade');
             $table->timestamps();

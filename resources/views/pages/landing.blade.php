@@ -2,6 +2,7 @@
 
 
 @section('content')
+@include('partials.navigation_bar')
 <!-- ::::::  Start Hero Section  ::::::  -->
 <div class="hero slider-dot-fix slider-dot slider-dot-fix slider-dot--center slider-dot-size--medium slider-dot-circle  slider-dot-style--fill slider-dot-style--fill-white-active-green dot-gap__X--10">
     <!-- Start Single Hero Slide -->
@@ -15,7 +16,7 @@
                             <h6 class="title__hero title__hero--tiny text-uppercase">Welcome To Wonderfull</h6>
                             <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">Welcome To Wonderfull</h1>
                             <h4 class="title__hero title__hero--small font--regular">Welcome To Wonderfull</h4>
-                            <a href="/desa-wisata" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">show more</a>
+                            <a href={{ route('showLogin') }} class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">sign up</a>
                         </div>
                     </div>
                 </div>
@@ -40,6 +41,7 @@
             </div>
         </div>
     </div> 
+    
 </div> 
 <div>
     <div class="blog m-t-100">
