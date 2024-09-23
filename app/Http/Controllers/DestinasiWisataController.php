@@ -10,17 +10,12 @@ use Illuminate\Support\Str;
 class DestinasiWisataController extends Controller
 {
 
-    // public function create($desaWisataId)
-    // {
-    //     $desaWisata = DesaWisata::findOrFail($desaWisataId);
-    //     return view('pages.createdestinasi', compact('desaWisata'));
-    // }
-    public function create($desaWisataId)
+
+    public function create($slug)
     {
-        $desaWisata = DesaWisata::findOrFail($desaWisataId);
+        $desaWisata = DesaWisata::where('slug', 'suscipit')->firstOrFail();
         return view('pages.createdestinasi', compact('desaWisata'));
     }
-
 
 
     public function store(Request $request, $desaWisataId)
@@ -33,6 +28,8 @@ class DestinasiWisataController extends Controller
 
         $desaWisata = DesaWisata::findOrFail($desaWisataId);
         $path = $request->file('gambar')->store('images', 'public');
+        $slug = $desaWisata->slug;
+
 
         DestinasiWisata::create([
             'nama' => $request->nama,
@@ -42,18 +39,21 @@ class DestinasiWisataController extends Controller
             'tb_desa_wisatas_id' => $desaWisata->id,
         ]);
 
-        return redirect()->route('admin-desa.showListDestinasi', $desaWisataId)
+        return redirect()->route('admin-desa.showListDestinasi', $slug)
             ->with('success', 'Destinasi wisata berhasil ditambahkan');
     }
-    public function edit($desaWisataId, $id)
+
+
+
+    public function edit($id)
     {
-        $desaWisata = DesaWisata::findOrFail($desaWisataId);
+
         $destinasiWisata = DestinasiWisata::findOrFail($id);
 
-        return view('pages.editdestinasi', compact('desaWisata', 'destinasiWisata'));
+        return view('pages.editdestinasi', compact('destinasiWisata'));
     }
 
-    public function update(Request $request, $desaWisataId, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nama' => 'required|string|max:50',
@@ -63,19 +63,21 @@ class DestinasiWisataController extends Controller
 
         $destinasiWisata = DestinasiWisata::findOrFail($id);
 
+
+
         if ($request->hasFile('gambar')) {
-            $gambarPath = $request->file('gambar')->store('images', 'public');
-            $destinasiWisata->gambar = $gambarPath;
+            $path = $request->file('gambar')->store('images', 'public');
+            $destinasiWisata->gambar = $path;
         }
 
         $destinasiWisata->update([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
             'slug' => Str::slug($request->nama),
+
         ]);
 
-        return redirect()->route('admin-desa.showListDestinasi', $desaWisataId)
-            ->with('success', 'Destinasi Wisata berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Update successful!');
     }
 
 
@@ -88,16 +90,13 @@ class DestinasiWisataController extends Controller
 
     public function destroy($id)
     {
-        // Find the destination by its ID or fail with a 404 error if not found
         $destinasiWisata = DestinasiWisata::findOrFail($id);
         $desaWisataid = $destinasiWisata->tb_desa_wisatas_id;
 
 
-        // Delete the destination
         $destinasiWisata->delete();
 
-        // Redirect back with a success message
-        return redirect()->route('admin-desa.showListDestinasi', $desaWisataid)
-            ->with('success', 'Destinasi Wisata berhasil dihapus.');
+
+        return redirect()->back()->with('success', 'Delete successful!');
     }
 }

@@ -21,8 +21,14 @@ class ProfileUserController extends Controller
     public function index(Request $request)
     {
 
+
+
         $user = Auth::user();
-        $desaWisata = $request->input('desaWisata', null);
+        $desaWisata = $request->session()->get('desaWisata');
+
+
+
+
 
         return view('profile.dashboard', compact('user', 'desaWisata'));
     }

@@ -51,14 +51,10 @@ class AdminController extends Controller
         ]);
 
 
-        $response = $this->apiService->post('admins', $validatedData);
-
-        if (isset($response['id'])) {
-            return redirect()->route('admin.dashboard')->with('success', 'Admin created successfully!');
-        }
+        $this->apiService->post('admins', $validatedData);
 
 
-        return redirect()->back()->withErrors(['error' => 'Failed to create admin']);
+        return redirect()->back()->with(['success' => 'Create admin successfull',]);
     }
 
 
@@ -69,10 +65,10 @@ class AdminController extends Controller
 
         $response = $this->apiService->get("admins/{$id}");
 
-        if (isset($response['id'])) {
-            $admin = $response;
-        } else {
+        if (is_null($response)) {
             return redirect()->route('admin.dashboard')->withErrors(['error' => 'Admin not found']);
+        } else {
+            $admin = $response;
         }
 
         return view('admin.edit', ['admin' => $admin]);
@@ -93,7 +89,7 @@ class AdminController extends Controller
             'no_telp' => 'nullable|string|max:20',
         ]);
 
-        // Menyiapkan data untuk permintaan update
+
         $data = [
             'tb_desa_wisatas_id' => $validatedData['tb_desa_wisatas_id'],
             'email' => $validatedData['email'],
@@ -103,15 +99,10 @@ class AdminController extends Controller
             'no_telp' => $validatedData['no_telp'],
         ];
 
-        $response = $this->apiService->put("admins/{$id}", $data);
+        $this->apiService->put("admins/{$id}", $data);
 
 
-        if ($response['status'] == 'sucsses') {
-            return redirect()->route('admin.dashboard')->with('success', 'Admin updated successfully!');
-        }
-
-        $errorMessage = $response['message'] ?? 'Failed to update admin';
-        return redirect()->back()->withErrors(['error' => $errorMessage]);
+        return redirect()->back()->with('success', 'Admin updated successfully!');
     }
 
 
@@ -122,14 +113,9 @@ class AdminController extends Controller
         $this->apiService->setToken($token);
 
 
-        $response = $this->apiService->delete("admins/{$id}");
-
-        if ($response['status'] == 'success') {
-            return redirect()->route('admin.dashboard')->with('success', 'Admin deleted successfully!');
-        }
+        $this->apiService->delete("admins/{$id}");
 
 
-        $errorMessage = $response['message'] ?? 'Failed to delete admin';
-        return redirect()->back()->withErrors(['error' => $errorMessage]);
+        return redirect()->back();
     }
 }

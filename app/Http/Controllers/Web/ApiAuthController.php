@@ -40,16 +40,19 @@ class ApiAuthController extends Controller
             // dd($response);
             if (isset($response['token'])) {
                 $user = $response['data'];
-                $desaWisata = $user['tb_admindesa']['desa_wisata'];
-                // dd($desaWisata);
+
 
                 Auth::loginUsingId($user['id']);
-
-
                 session(['api_token' => $response['token']]);
+
+                if ($user['role'] === 'admin') {
+                    $desaWisata = $user['tb_admindesa']['desa_wisata'];
+                    session(['desaWisata' => $desaWisata]);
+                }
+
                 $this->apiService->setToken($response['token']);
 
-                return redirect()->route('profile.index', ['desaWisata' => $desaWisata])->with([
+                return redirect()->route('profile.index',)->with([
                     'success' => 'Login successful!',
 
                 ]);

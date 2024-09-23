@@ -4,6 +4,11 @@
     <h1 style="text-align: center; margin-bottom: 20px;">Edit Admin</h1>
 
     <form action="{{ route('admin.update', $admin['id']) }}" method="POST" style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+        @if (session('success'))
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+    @endif
         @csrf
         @method('PUT')
 

@@ -46,7 +46,6 @@ class HttpClient implements HttpClientInterface
             }
         }
 
-        // Mengirim data sebagai multipart/form-data
         return Http::withHeaders($headers)->post($url, [
             'multipart' => $multipartData
         ]);

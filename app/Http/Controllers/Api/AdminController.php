@@ -45,7 +45,7 @@ class AdminController extends Controller
             'tb_akun_id' => $akun->id
         ]);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Admin created successfully!');
+        return response()->json(['status' => 'sucsses', 'message' => 'Create admin successfully'], 200);
     }
 
     public function show($id)

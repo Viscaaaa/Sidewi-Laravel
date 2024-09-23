@@ -61,24 +61,17 @@ class AuthController extends Controller
         $user = akun::where('email', $credentials['email'])->first();
 
 
-
-
-
-
-
         if ($user && Hash::check($credentials['password'], $user->password)) {
 
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
 
             if ($user->role === "super_admin") {
-                $useradmin = $user->tb_admindesa ?? null;
-                $desa = $useradmin->DesaWisata;
+
                 return response()->json([
                     'message' => 'Login as super admin successfully',
                     'token' => $token,
                     'data' => $user,
-
                 ], 200);
             } else if ($user->role === "admin") {
                 $useradmin = $user->tb_admindesa ?? null;

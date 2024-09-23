@@ -3,10 +3,15 @@
 @section('content')
 <div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     <h1 style="text-align: center; margin-bottom: 20px; color: #333;">Edit Destinasi Wisata {{ $destinasiWisata->nama }}</h1>
-
-    <form action="{{ route('destination.update', ['desaWisata' => $desaWisata->id, 'destination' => $destinasiWisata->id]) }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column;">
+    @if (session('success'))
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+    @endif
+    <form action="{{ route('destination.update', ['destination' => $destinasiWisata->id]) }}" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column;">
         @csrf
         @method('PUT')
+
         
         <div class="form-group" style="margin-bottom: 15px;">
             <label for="nama" style="font-weight: bold; margin-bottom: 5px; color: #555;">Nama</label>

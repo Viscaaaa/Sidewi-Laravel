@@ -40,14 +40,14 @@ Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function
     Route::delete('destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/destinasi', [DestinasiController::class, 'index'])->name('destinasi.index');
-    Route::get('destinasi/create/{desa_id}', [DestinasiController::class, 'create'])->name('destinasi.create');
-    Route::post('/destinasi', [DestinasiController::class, 'store'])->name('destinasi.store');
-    Route::get('/destinasi/{id}/edit', [DestinasiController::class, 'edit'])->name('destinasi.edit');
-    Route::put('/destinasi/{id}', [DestinasiController::class, 'update'])->name('destinasi.update');
-    Route::delete('/destinasi/{id}', [DestinasiController::class, 'destroy'])->name('destinasi.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/destinasi', [DestinasiController::class, 'index'])->name('destinasi.index');
+//     Route::get('destinasi/create/{desa_id}', [DestinasiController::class, 'create'])->name('destinasi.create');
+//     Route::post('/destinasi', [DestinasiController::class, 'store'])->name('destinasi.store');
+//     Route::get('/destinasi/{id}/edit', [DestinasiController::class, 'edit'])->name('destinasi.edit');
+//     Route::put('/destinasi/{id}', [DestinasiController::class, 'update'])->name('destinasi.update');
+//     Route::delete('/destinasi/{id}', [DestinasiController::class, 'destroy'])->name('destinasi.destroy');
+// });
 
 
 // Route lokal 
@@ -58,13 +58,14 @@ Route::get('/formlogin', [AuthController::class, 'formlogin']);
 // Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('role:admin')->group(function () {
-    Route::get('/admin-desa/{id}', [AdminDesaController::class, 'showListDestinasi'])->name('admin-desa.showListDestinasi');
+    Route::get('/admin-desa/{slug}', [AdminDesaController::class, 'showListDestinasi'])->name('admin-desa.showListDestinasi');
     Route::prefix('desa-wisata/{desaWisata}')->group(function () {
-        Route::resource('destination', DestinasiWisataController::class)->except(['destroy']);
+        Route::resource('destination', DestinasiWisataController::class)->except(['destroy', 'edit', 'update']);
         Route::delete('destination', [DestinasiWisataController::class, 'destroy'])->name('destination.destroy');
     });
+    Route::get('destination/{destination}/edit', [DestinasiWisataController::class, 'edit'])->name('destination.edit');
+    Route::put('destination/{destination}/update', [DestinasiWisataController::class, 'update'])->name('destination.update');
 });
-
 
 Route::middleware('role:super_admin')->group(function () {
     Route::resource('superadmin', SuperAdminController::class);

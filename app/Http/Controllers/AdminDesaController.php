@@ -9,10 +9,9 @@ use Illuminate\Support\Str;
 
 class AdminDesaController extends Controller
 {
-    public function showListDestinasi($id)
+    public function showListDestinasi($slug)
     {
-
-        $desaWisata = DesaWisata::findOrFail($id);
+        $desaWisata = DesaWisata::where('slug', 'suscipit')->firstOrFail();
 
         $destinasiWisata = DestinasiWisata::where('tb_desa_wisatas_id', $desaWisata->id)->get();
 

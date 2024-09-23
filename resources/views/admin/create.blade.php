@@ -4,6 +4,11 @@
     <h1 style="text-align: center; color: #333; margin-bottom: 20px;">Create New Admin</h1>
 
     <form action="{{ route('admin.store') }}" method="POST" style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        @if (session('success'))
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
+        {{ session('success') }}
+    </div>
+    @endif
         @csrf
 
         <div style="margin-bottom: 15px;">
