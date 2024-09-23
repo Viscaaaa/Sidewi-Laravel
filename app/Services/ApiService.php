@@ -39,7 +39,10 @@ class ApiService
             'password' => $password,
         ]);
 
-        return $response->json();
+        return [
+            'status_code' => $response->status(),
+            'data' => $response->json()
+        ];
     }
 
     public function get($endpoint)
@@ -64,5 +67,74 @@ class ApiService
     {
         $response = $this->httpClient->delete("{$this->baseUrl}/{$endpoint}", $this->getHeaders());
         return $response->json();
+    }
+    public function postDestinasiWisata($endpoint, $data)
+    {
+        // Memastikan bahwa data adalah array multipart
+        $multipartData = [];
+        foreach ($data as $key => $value) {
+            if ($key === 'gambar') {
+                if (isset($value['contents']) && isset($value['filename'])) {
+                    $multipartData[] = [
+                        'name'     => $key,
+                        'contents' => $value['contents'], // Stream resource
+                        'filename' => $value['filename']  // Nama file
+                    ];
+                } else {
+                    throw new \Exception("Data gambar tidak lengkap.");
+                }
+            } else {
+                $multipartData[] = [
+                    'name'     => $key,
+                    'contents' => $value
+                ];
+            }
+        }
+
+        // Kirim request dengan multipart/form-data
+        $response = Http::withHeaders($this->getHeaders())
+            ->attach('gambar', $multipartData[4]['contents'], $multipartData[4]['filename']) // Attach file
+            ->post("{$this->baseUrl}/{$endpoint}", [ // Data form selain file
+                'tb_desa_wisatas_id' => $data['tb_desa_wisatas_id'],
+                'deskripsi' => $data['deskripsi'],
+                'nama' => $data['nama'],
+                'slug' => $data['slug'],
+            ]);
+
+        return $response->json();
+    }
+
+    public function getDesaWisataByAdminId($adminId)
+    {
+        $endpoint = "desa-wisata/akun/{$adminId}";
+        $url = "{$this->baseUrl}/{$endpoint}";
+        $response = $this->httpClient->get($url, $this->getHeaders());
+        return $response;
+    }
+
+    public function getDestinasiWisata($desaId = null)
+    {
+        $endpoint = $desaId ? "destinasi-wisata?desa_id={$desaId}" : "destinasi-wisata";
+        return $this->get($endpoint);
+    }
+
+    public function getDestinasiWisataById($id)
+    {
+        return $this->get("destinasi-wisata/{$id}");
+    }
+
+    public function createDestinasiWisata($data)
+    {
+        return $this->postDestinasiWisata("destinasi", $data);
+    }
+
+    public function updateDestinasiWisata($id, $data)
+    {
+        return $this->put("destinasi-wisata/{$id}", $data);
+    }
+
+    public function deleteDestinasiWisata($id)
+    {
+        return $this->delete("destinasi-wisata/{$id}");
     }
 }

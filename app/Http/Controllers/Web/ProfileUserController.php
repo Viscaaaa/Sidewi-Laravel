@@ -18,10 +18,13 @@ class ProfileUserController extends Controller
         $this->apiService = $apiService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+
         $user = Auth::user();
-        return view('profile.dashboard', compact('user'));
+        $desaWisata = $request->input('desaWisata', null);
+
+        return view('profile.dashboard', compact('user', 'desaWisata'));
     }
 
 

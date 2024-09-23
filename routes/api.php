@@ -8,16 +8,7 @@ use App\Http\Controllers\api\DesaWisataController;
 use App\Http\Controllers\api\DestinasiWisataController;
 use App\Models\DestinasiWisata;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,10 +22,5 @@ Route::middleware('auth:sanctum', 'role:super_admin')->group(function () {
 Route::middleware('auth:sanctum', 'role:admin|super_admin')->group(function () {
     Route::resource('desaWisata', DesaWisataController::class);
     Route::resource('destinasi', DestinasiWisataController::class);
+    Route::get('/desa-wisata/akun/{akunId}', [DesaWisataController::class, 'desaWisataByAkunId']);
 });
-
-
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });

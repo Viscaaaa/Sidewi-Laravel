@@ -12,9 +12,11 @@ class DesaWisataController extends Controller
 
     public function index()
     {
-        $desaWisata = DesaWisata::all();
+
+        $desaWisata = DesaWisata::with('destinasi', 'adminDesa')->get();
         return response()->json($desaWisata, 200);
     }
+
 
     public function store(Request $request)
     {
@@ -88,5 +90,22 @@ class DesaWisataController extends Controller
         $desaWisata->delete();
 
         return response()->json(['message' => 'Desa wisata deleted successfully'], 200);
+    }
+
+    public function desaWisataByAkunId($akunId)
+    {
+
+        $desaWisata = DesaWisata::whereHas('adminDesa', function ($query) use ($akunId) {
+            $query->where('tb_akun_id', $akunId);
+        })->with(['destinasi' => function ($query) {
+
+            $query->whereNotNull('nama');
+        }])->get();
+
+        if ($desaWisata->isEmpty()) {
+            return response()->json(['message' => 'Desa wisata not found'], 404);
+        }
+
+        return response()->json($desaWisata, 200);
     }
 }

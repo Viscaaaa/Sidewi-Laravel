@@ -12,13 +12,7 @@ use App\Services\ApiService;
 class AuthController extends Controller
 {
 
-    protected $apiService;
 
-
-    public function __construct(ApiService $apiService)
-    {
-        $this->apiService = $apiService;
-    }
 
     public function formregister()
     {
@@ -50,63 +44,49 @@ class AuthController extends Controller
         return view('pages.login');
     }
 
+
+
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $response = $this->apiService->login($request->input('email'), $request->input('password'));
+        $user = akun::where('email', $request->email)->first();
 
 
-        if (isset($response['token'])) {
-            $user = $response['data'];
 
-            Auth::loginUsingId($user['id']);
-            session(['api_token' => $response['token']]);
-
-            return Redirect::route('profile.index')->with('success', 'Login successful!');
+        if (!$user) {
+            return redirect('/formlogin')->withErrors(['email' => 'Email tidak terdaftar.']);
         }
 
-        $errorMessage = $response['message'] ?? 'Login failed. Please try again.';
-        return Redirect::back()->withErrors(['email' => $errorMessage]);
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect('/formlogin')->withErrors(['password' => 'Password salah.']);
+        }
+
+        Auth::login($user);
+
+
+        if ($user->role === 'super_admin') {
+            // Redirect ke halaman khusus Super Admin
+            return redirect()->route('superadmin.index');
+        }
+
+
+        if ($user->role === 'admin') {
+            $useradmin = $user->tb_admindesa;
+            $id_desa = $useradmin->tb_desa_wisatas_id ?? null;
+            $desa = $useradmin->desa_wisata;
+
+
+
+
+            if ($id_desa) {
+
+                return redirect()->route('profile.index')->with('success', 'Login successful!');
+
+                // return redirect()->route('admin-desa.showListDestinasi', ['id' => $id_desa]);
+            } else {
+                return redirect('/formlogin')->withErrors(['error' => 'ID Desa Wisata tidak ditemukan.']);
+            }
+        }
+
+        return redirect('/');
     }
-
-    // public function login(Request $request)
-    // {
-    //     $user = akun::where('email', $request->email)->first();
-
-    //     if (!$user) {
-    //         return redirect('/formlogin')->withErrors(['email' => 'Email tidak terdaftar.']);
-    //     }
-
-    //     if (!Hash::check($request->password, $user->password)) {
-    //         return redirect('/formlogin')->withErrors(['password' => 'Password salah.']);
-    //     }
-
-    //     Auth::login($user);
-
-
-    //     if ($user->role === 'super_admin') {
-    //         // Redirect ke halaman khusus Super Admin
-    //         return redirect()->route('superadmin.index');
-    //     }
-
-
-    //     if ($user->role === 'admin') {
-    //         $useradmin = $user->tb_admindesa;
-    //         $id_desa = $useradmin->tb_desa_wisatas_id ?? null;
-
-    //         if ($id_desa) {
-    //             // Pastikan pengalihan ke halaman yang benar
-    //             return redirect()->route('admin-desa.showListDestinasi', ['id' => $id_desa]);
-    //         } else {
-    //             return redirect('/formlogin')->withErrors(['error' => 'ID Desa Wisata tidak ditemukan.']);
-    //         }
-    //     }
-
-    //     return redirect('/');
-    // }
-
 }

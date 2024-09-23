@@ -39,7 +39,7 @@
             </button>
         </form>
         <p style="margin-top: 20px; text-align: center; color: #555;">
-            <a href="/formregister" style="color: #007bff; text-decoration: none;">Don't have an account? Register</a>
+            <a href="{{ route('register') }}" style="color: #007bff; text-decoration: none;">Don't have an account? Register</a>
         </p>
     </div>
 </body>

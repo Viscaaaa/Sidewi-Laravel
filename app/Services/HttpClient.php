@@ -26,4 +26,29 @@ class HttpClient implements HttpClientInterface
     {
         return Http::withHeaders($headers)->delete($url);
     }
+
+    public function postMultipart(string $url, array $data = [], array $headers = [])
+    {
+        $multipartData = [];
+
+        foreach ($data as $key => $value) {
+            if ($key === 'gambar' && is_string($value) && file_exists($value)) {
+                $multipartData[] = [
+                    'name'     => $key,
+                    'contents' => fopen($value, 'r'),
+                    'filename' => basename($value)
+                ];
+            } else {
+                $multipartData[] = [
+                    'name'     => $key,
+                    'contents' => $value
+                ];
+            }
+        }
+
+        // Mengirim data sebagai multipart/form-data
+        return Http::withHeaders($headers)->post($url, [
+            'multipart' => $multipartData
+        ]);
+    }
 }

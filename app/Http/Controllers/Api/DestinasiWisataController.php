@@ -16,23 +16,53 @@ class DestinasiWisataController extends Controller
         return response()->json($destinasiWisata, 200);
     }
 
+    public function indexByIdDesa(Request $request)
+    {
+
+        $desaId = $request->query('desa_id');
+
+        if ($desaId) {
+
+            $destinasiWisata = DestinasiWisata::where('desa_wisata_id', $desaId)
+                ->with('desaWisata')
+                ->get();
+        } else {
+
+            $destinasiWisata = DestinasiWisata::with('desaWisata')->get();
+        }
+
+        return response()->json($destinasiWisata, 200);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'tb_desa_wisatas_id' => 'required|exists:tb_desa_wisatas,id',
             'deskripsi' => 'required|string',
             'nama' => 'required|string|max:50',
-            'gambar' => 'required|string',
-            'slug' => 'required|string|max:60|unique:tb_destinasi_wisatas'
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'slug' => 'required|string|max:60|unique:tb_destinasi_wisatas',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $destinasiWisata = DestinasiWisata::create($request->all());
 
-        return response()->json(['message' => 'Destinasi wisata created successfully', 'destinasi_wisata' => $destinasiWisata], 201);
+        $file = $request->file('gambar');
+
+
+        $filePath = $file->store('api', 'public');
+
+
+        $data = $request->all();
+        $data['gambar'] = $filePath;
+        $destinasiWisata = DestinasiWisata::create($data);
+
+        return response()->json([
+            'message' => 'Destinasi wisata created successfully',
+            'destinasi_wisata' => $destinasiWisata
+        ], 201);
     }
 
     public function show($id)

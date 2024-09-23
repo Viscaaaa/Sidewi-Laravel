@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class DestinasiWisata extends Model
 {
@@ -18,6 +19,12 @@ class DestinasiWisata extends Model
         'gambar',
         'slug',
     ];
+
+    public function setNamaAttribute($value)
+    {
+        $this->attributes['nama'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
 
     public function desaWisata()
     {

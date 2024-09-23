@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\akun;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 
 
@@ -46,7 +44,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
-        // Validasi input
+
         $data = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string'
@@ -56,29 +54,40 @@ class AuthController extends Controller
             return response()->json($data->errors(), 400);
         }
 
-        // Ambil kredensial dari request
+
         $credentials = $request->only('email', 'password');
 
-        // Temukan pengguna berdasarkan email
-        $user = \App\Models\Akun::where('email', $credentials['email'])->first();
 
-        // Cek apakah pengguna ada dan passwordnya cocok
-        if ($user && \Illuminate\Support\Facades\Hash::check($credentials['password'], $user->password)) {
-            // Jika valid, buat token
+        $user = akun::where('email', $credentials['email'])->first();
+
+
+
+
+
+
+
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
-            // Tentukan pesan berdasarkan peran
+
             if ($user->role === "super_admin") {
+                $useradmin = $user->tb_admindesa ?? null;
+                $desa = $useradmin->DesaWisata;
                 return response()->json([
                     'message' => 'Login as super admin successfully',
                     'token' => $token,
-                    'data' => $user
+                    'data' => $user,
+
                 ], 200);
             } else if ($user->role === "admin") {
+                $useradmin = $user->tb_admindesa ?? null;
+                $desa = $useradmin->DesaWisata;
                 return response()->json([
                     'message' => 'Login as admin successfully',
                     'token' => $token,
-                    'data' => $user
+                    'data' => $user,
+
                 ], 200);
             }
 
