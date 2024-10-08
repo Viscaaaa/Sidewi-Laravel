@@ -37,6 +37,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'no_telp' => $request->no_telp,
             'password' => Hash::make($request->password),
+            // note : tidak perl di hash jika sudah di hash langsung pada model 
             'role' => 'admin'
         ]);
 

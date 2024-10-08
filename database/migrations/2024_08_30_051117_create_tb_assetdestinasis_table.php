@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_assetdestinasi', function (Blueprint $table) {
+        Schema::create('assetdestinasi', function (Blueprint $table) {
             $table->id();
-            $table->text('link');
-            $table->foreignId('tb_destinasi_wisatas_id')->constrained('tb_destinasi_wisatas')->onDelete('cascade');
+            $table->foreignId('destinasi_wisata_id')
+                ->constrained('tb_destinasi_wisatas')
+                ->onDelete('cascade');
+            $table->string('gambar');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
             $table->dropForeign(['tb_destinasi_wisatas_id']);
         });
 
-        Schema::dropIfExists('tb_assetdestinasis');
+        Schema::dropIfExists('assetdestinasis');
     }
 };

@@ -64,7 +64,7 @@ class AuthController extends Controller
 
 
         if ($user->role === 'super_admin') {
-            // Redirect ke halaman khusus Super Admin
+
             return redirect()->route('superadmin.index');
         }
 
@@ -80,8 +80,6 @@ class AuthController extends Controller
             if ($id_desa) {
 
                 return redirect()->route('profile.index')->with('success', 'Login successful!');
-
-                // return redirect()->route('admin-desa.showListDestinasi', ['id' => $id_desa]);
             } else {
                 return redirect('/formlogin')->withErrors(['error' => 'ID Desa Wisata tidak ditemukan.']);
             }

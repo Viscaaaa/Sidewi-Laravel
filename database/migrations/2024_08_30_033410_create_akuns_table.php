@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('password', 60);
             $table->string('nama', 25);
             $table->string('no_telp', 15);
-            $table->text('foto')->nullable()->change();
+            $table->text('foto')->nullable();
             $table->string('role', 12);
-            $table->string('token')->nullable()->change();
+            $table->string('token')->nullable();
             $table->timestamps();
         });
     }

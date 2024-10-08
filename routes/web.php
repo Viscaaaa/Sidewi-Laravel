@@ -31,7 +31,7 @@ Route::get('profile', [ProfileUserController::class, 'index'])->name('profile.in
 
 
 // route admin
-Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function () {
+Route::prefix('admin-web')->middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('create', [AdminController::class, 'create'])->name('admin.create');
     Route::post('store', [AdminController::class, 'store'])->name('admin.store');

@@ -31,8 +31,8 @@ class DestinasiWisata extends Model
         return $this->belongsTo(DesaWisata::class, 'tb_desa_wisatas_id');
     }
 
-    public function assetDesa()
+    public function assetDestinasi()
     {
-        return $this->hasMany(tb_assetdestinasi::class);
+        return $this->hasMany(AssetDestinasi::class);
     }
 }

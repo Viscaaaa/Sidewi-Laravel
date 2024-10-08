@@ -11,6 +11,11 @@ class DesaWisata extends Model
 
     protected $table = 'tb_desa_wisatas';
 
+
+    protected $fillable = [
+        'maps'
+    ];
+
     public function destinasi()
     {
         return $this->hasMany(DestinasiWisata::class, 'tb_desa_wisatas_id');
